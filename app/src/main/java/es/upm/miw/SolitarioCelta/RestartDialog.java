@@ -15,10 +15,10 @@ public class RestartDialog extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(main);
         builder
-                .setTitle("Confirmación")
-                .setMessage("¿Está seguro que desea reiniciar la partida?")
+                .setTitle(R.string.txtDialogoReiniciarTitulo)
+                .setMessage(R.string.txtDialogoReiniciarPregunta)
                 .setPositiveButton(
-                        getString(R.string.txtDialogoFinalAfirmativo),
+                        R.string.txtDialogoReiniciarAfirmativo,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
