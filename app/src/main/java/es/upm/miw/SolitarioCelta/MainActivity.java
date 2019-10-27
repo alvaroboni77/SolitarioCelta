@@ -82,8 +82,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.opcAcercaDe:
                 startActivity(new Intent(this, AcercaDe.class));
                 return true;
-
-            // TODO!!! resto opciones
+            case R.id.opcReiniciarPartida:
 
             default:
                 Snackbar.make(
