@@ -83,7 +83,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, AcercaDe.class));
                 return true;
             case R.id.opcReiniciarPartida:
-
+                new RestartDialog().show(getFragmentManager(), "RESTART_DIALOG");
+                return true;
             default:
                 Snackbar.make(
                         findViewById(android.R.id.content),
