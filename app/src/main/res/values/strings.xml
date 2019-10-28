@@ -33,5 +33,9 @@
     <string name="prefTextoNombreJugador">Pulse para teclear el nombre del jugador</string>
     <string name="prefTituloCategoria2">Ajustes del juego</string>
 
+    <string name="nombreFicheroPartida">partida_guardada.txt</string>
+    <string name="txtPartidaGuardada">¡Partida guardada con éxito!</string>
+    <string name="txtPartidaRecuperada">¡Partida recuperada con éxito!</string>
+    <string name="txtPartidaInexistente">¡No existe ninguna partida guardada aún!</string>
 
 </resources>

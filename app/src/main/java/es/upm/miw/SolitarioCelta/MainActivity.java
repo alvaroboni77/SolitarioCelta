@@ -1,6 +1,7 @@
 package es.upm.miw.SolitarioCelta;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,11 @@ import android.view.View;
 import android.widget.RadioButton;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -85,6 +91,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.opcReiniciarPartida:
                 new RestartDialog().show(getFragmentManager(), "RESTART_DIALOG");
                 return true;
+            case R.id.opcGuardarPartida:
+                guardarFichero();
+                return true;
+            case R.id.opcRecuperarPartida:
+                recuperarFichero();
+                return true;
             default:
                 Snackbar.make(
                         findViewById(android.R.id.content),
@@ -93,5 +105,56 @@ public class MainActivity extends AppCompatActivity {
                 ).show();
         }
         return true;
+    }
+
+    private String obtenerNombreFichero() {
+        return getString(R.string.nombreFicheroPartida);
+    }
+
+    private void guardarFichero() {
+        try {
+            String cadena = miJuego.serializaTablero();
+            FileOutputStream fos = openFileOutput(obtenerNombreFichero(), Context.MODE_PRIVATE);
+            fos.write(cadena.getBytes());
+            fos.close();
+            Snackbar.make(
+                    findViewById(android.R.id.content),
+                    getString(R.string.txtPartidaGuardada),
+                    Snackbar.LENGTH_LONG
+            ).show();
+        } catch (Exception e){
+            Log.e("guardarFichero()", "FILE I/O ERROR: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void recuperarFichero() {
+        try {
+            File file = new File(getApplicationContext().getFilesDir(),obtenerNombreFichero());
+            if (file.exists()) {
+                BufferedReader fin = new BufferedReader( new InputStreamReader(openFileInput(obtenerNombreFichero())));
+                String linea = fin.readLine();
+                while(linea != null) {
+                    miJuego.deserializaTablero(linea);
+                    linea = fin.readLine();
+                }
+                fin.close();
+                Snackbar.make(
+                        findViewById(android.R.id.content),
+                        getString(R.string.txtPartidaRecuperada),
+                        Snackbar.LENGTH_LONG
+                ).show();
+            } else {
+                Snackbar.make(
+                        findViewById(android.R.id.content),
+                        getString(R.string.txtPartidaInexistente),
+                        Snackbar.LENGTH_LONG
+                ).show();
+            }
+        } catch (Exception e){
+            Log.e("recuperarFichero()", "FILE I/O ERROR: " + e.getMessage());
+            e.printStackTrace();
+        }
+        mostrarTablero();
     }
 }
