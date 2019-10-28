@@ -95,7 +95,11 @@ public class MainActivity extends AppCompatActivity {
                 guardarFichero();
                 return true;
             case R.id.opcRecuperarPartida:
-                recuperarFichero();
+                if(miJuego.numeroFichas()<32){
+                    new EndGameDialog().show(getFragmentManager(), "ABANDON_DIALOG");
+                } else {
+                    recuperarFichero();
+                }
                 return true;
             default:
                 Snackbar.make(
@@ -128,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void recuperarFichero() {
+    protected void recuperarFichero() {
         try {
             File file = new File(getApplicationContext().getFilesDir(),obtenerNombreFichero());
             if (file.exists()) {
